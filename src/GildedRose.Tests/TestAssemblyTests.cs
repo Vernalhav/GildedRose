@@ -22,15 +22,12 @@ namespace GildedRose.Tests
         {
             Item given1 = new Item { Name = "A", Quality = 10, SellIn = 1 };
             Item given2 = new Item { Name = "B", Quality = 5, SellIn = 1 };
-            var app = new Program
-            {
-                Items = new List<Item> { given1, given2 }
-            };
+            var items = new List<Item> { given1, given2 };
 
-            app.UpdateQuality();
+            Program.UpdateQuality(items);
 
-            var received1 = app.Items[0];
-            var received2 = app.Items[1];
+            var received1 = items[0];
+            var received2 = items[1];
             Assert.Equal(9, received1.Quality);
             Assert.Equal(4, received2.Quality);
         }
