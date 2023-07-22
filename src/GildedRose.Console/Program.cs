@@ -7,7 +7,7 @@ namespace GildedRose.Console
     {
         public IList<Item> Items;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
 
@@ -28,8 +28,7 @@ namespace GildedRose.Console
                     new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
                 }
             };
-            Market.
-                        UpdateQuality(app.Items);
+            Market.UpdateQuality(app.Items);
 
             System.Console.ReadKey();
         }
