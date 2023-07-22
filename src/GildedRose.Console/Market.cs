@@ -5,6 +5,8 @@ namespace GildedRose.Domain
 {
     public static class Market
     {
+        private static readonly sbyte MAX_QUALITY = 50;
+
         private enum ItemType
         {
             Regular,
@@ -19,11 +21,6 @@ namespace GildedRose.Domain
                 UpdateQuality(item);
         }
 
-        private static void UpdateLegendaryQuality(Item item)
-        {
-            return;
-        }
-
         public static void UpdateQuality(Item item)
         {
             var itemType = GetItemType(item.Name);
@@ -31,6 +28,9 @@ namespace GildedRose.Domain
             {
                 case ItemType.Legendary:
                     UpdateLegendaryQuality(item);
+                    return;
+                case ItemType.AgedBrie:
+                    UpdateAgedBrieQuality(item);
                     return;
                 default:
                     break;
@@ -98,9 +98,18 @@ namespace GildedRose.Domain
             }
         }
 
+        private static void UpdateAgedBrieQuality(Item item)
+        {
+            item.SellIn--;
+            item.Quality = Math.Min(item.Quality + 1, MAX_QUALITY);
+        }
+
+        private static void UpdateLegendaryQuality(Item _) { }
+
         private static ItemType GetItemType(string name)
         {
             if (name.StartsWith("Sulfuras")) return ItemType.Legendary;
+            if (name.StartsWith("Aged Brie")) return ItemType.AgedBrie;
             return ItemType.Regular;
         }
     }
