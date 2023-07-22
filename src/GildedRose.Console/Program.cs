@@ -36,8 +36,8 @@ namespace GildedRose.Console
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
-                Update(Items[i]);
+            foreach (var item in Items)
+                Update(item);
         }
 
         private static void Update(Item item)
