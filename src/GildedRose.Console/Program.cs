@@ -7,8 +7,6 @@ namespace GildedRose.Console
     {
         private static void Main(string[] args)
         {
-            System.Console.WriteLine("OMGHAI!");
-
             var items = new List<Item>
             {
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
@@ -23,8 +21,8 @@ namespace GildedRose.Console
                 },
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
-            Market.UpdateQuality(items);
 
+            Market.UpdateQuality(items);
             System.Console.ReadKey();
         }
     }
