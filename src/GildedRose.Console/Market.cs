@@ -40,10 +40,7 @@ namespace GildedRose.Domain
             {
                 if (item.Quality > 0)
                 {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        item.Quality--;
-                    }
+                    item.Quality--;
                 }
             }
             else
@@ -73,10 +70,7 @@ namespace GildedRose.Domain
                 }
             }
 
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
-            {
-                item.SellIn--;
-            }
+            item.SellIn--;
 
             if (item.SellIn < 0)
             {
@@ -86,10 +80,7 @@ namespace GildedRose.Domain
                     {
                         if (item.Quality > 0)
                         {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality--;
-                            }
+                            item.Quality--;
                         }
                     }
                     else
