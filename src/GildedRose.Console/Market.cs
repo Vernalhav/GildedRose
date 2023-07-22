@@ -1,9 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRose.Domain
 {
     public static class Market
     {
+        private enum ItemType
+        {
+            Regular,
+            Legendary,
+            AgedBrie,
+            ConcertPass,
+        }
 
         public static void UpdateQuality(IList<Item> items)
         {
@@ -11,8 +19,23 @@ namespace GildedRose.Domain
                 UpdateQuality(item);
         }
 
+        private static void UpdateLegendaryQuality(Item item)
+        {
+            return;
+        }
+
         public static void UpdateQuality(Item item)
         {
+            var itemType = GetItemType(item.Name);
+            switch (itemType)
+            {
+                case ItemType.Legendary:
+                    UpdateLegendaryQuality(item);
+                    return;
+                default:
+                    break;
+            }
+
             if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
             {
                 if (item.Quality > 0)
@@ -82,6 +105,12 @@ namespace GildedRose.Domain
                     }
                 }
             }
+        }
+
+        private static ItemType GetItemType(string name)
+        {
+            if (name.StartsWith("Sulfuras")) return ItemType.Legendary;
+            return ItemType.Regular;
         }
     }
 }
