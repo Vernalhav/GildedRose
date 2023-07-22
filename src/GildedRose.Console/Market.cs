@@ -1,7 +1,6 @@
-﻿using GildedRose.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace GildedRose.Console
+namespace GildedRose.Domain
 {
     public static class Market
     {

@@ -1,4 +1,3 @@
-using GildedRose.Console;
 using GildedRose.Domain;
 using System.Collections.Generic;
 using Xunit;
@@ -11,7 +10,7 @@ namespace GildedRose.Tests
         public void TestQualityDegradesByOneBeforeSellDate()
         {
             Item given = new Item { Name = "A", Quality = 10, SellIn = 1 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(9, received.Quality);
@@ -23,7 +22,7 @@ namespace GildedRose.Tests
             Item given1 = new Item { Name = "A", Quality = 10, SellIn = 1 };
             Item given2 = new Item { Name = "B", Quality = 5, SellIn = 1 };
             var items = new List<Item> { given1, given2 };
-            Console.Market.UpdateQuality(items);
+            Market.UpdateQuality(items);
 
             var received1 = items[0];
             var received2 = items[1];
@@ -35,7 +34,7 @@ namespace GildedRose.Tests
         public void TestSingleItemValueIsNotNegative()
         {
             Item given = new Item { Name = "A", Quality = 0, SellIn = 1 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(0, received.Quality);
@@ -45,7 +44,7 @@ namespace GildedRose.Tests
         public void TestQualityDegradesFasterAfterSellDate()
         {
             Item given = new Item { Name = "A", Quality = 10, SellIn = 0 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(8, received.Quality);
@@ -55,7 +54,7 @@ namespace GildedRose.Tests
         public void TestSellInDateReducesByOneAfterUpdate()
         {
             Item given = new Item { Name = "A", Quality = 10, SellIn = 3 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(2, received.SellIn);
@@ -65,7 +64,7 @@ namespace GildedRose.Tests
         public void TestAgedBrieIncreasesInQuality()
         {
             Item given = new Item { Name = "Aged Brie", Quality = 10, SellIn = 3 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.True(received.Quality > 10);
@@ -75,7 +74,7 @@ namespace GildedRose.Tests
         public void TestAgedBrieQualityDoesNotExceedMax()
         {
             Item given = new Item { Name = "Aged Brie", Quality = 50, SellIn = 3 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(50, received.Quality);
@@ -85,7 +84,7 @@ namespace GildedRose.Tests
         public void TestSulfurasSellInDoesNotDecrease()
         {
             Item given = new Item { Name = "Sulfuras, Hand of Ragnaros", Quality = 50, SellIn = 5 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(5, received.SellIn);
@@ -95,7 +94,7 @@ namespace GildedRose.Tests
         public void TestPassQualityIncreasesByOneWhenFarFromConcert()
         {
             Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 15 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(11, received.Quality);
@@ -105,7 +104,7 @@ namespace GildedRose.Tests
         public void TestPassQualityIncreasesByTwoTenDaysAwayFromConcert()
         {
             Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 10 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(12, received.Quality);
@@ -115,7 +114,7 @@ namespace GildedRose.Tests
         public void TestPassQualityIncreasesByThreeFiveDaysAwayFromConcert()
         {
             Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 5 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(13, received.Quality);
@@ -125,7 +124,7 @@ namespace GildedRose.Tests
         public void TestPassQualityDropsAfterConcert()
         {
             Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 0 };
-            Console.Market.UpdateQuality(given);
+            Market.UpdateQuality(given);
 
             var received = given;
             Assert.Equal(0, received.Quality);
