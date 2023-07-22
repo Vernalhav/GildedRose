@@ -11,14 +11,9 @@ namespace GildedRose.Tests
         public void TestQualityDegradesByOneBeforeSellDate()
         {
             Item given = new Item { Name = "A", Quality = 10, SellIn = 1 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(9, received.Quality);
         }
 
@@ -44,14 +39,9 @@ namespace GildedRose.Tests
         public void TestSingleItemValueIsNotNegative()
         {
             Item given = new Item { Name = "A", Quality = 0, SellIn = 1 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(0, received.Quality);
         }
         
@@ -59,14 +49,9 @@ namespace GildedRose.Tests
         public void TestQualityDegradesFasterAfterSellDate()
         {
             Item given = new Item { Name = "A", Quality = 10, SellIn = 0 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(8, received.Quality);
         }
 
@@ -74,14 +59,9 @@ namespace GildedRose.Tests
         public void TestSellInDateReducesByOneAfterUpdate()
         {
             Item given = new Item { Name = "A", Quality = 10, SellIn = 3 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(2, received.SellIn);
         }
         
@@ -89,14 +69,9 @@ namespace GildedRose.Tests
         public void TestAgedBrieIncreasesInQuality()
         {
             Item given = new Item { Name = "Aged Brie", Quality = 10, SellIn = 3 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.True(received.Quality > 10);
         }     
         
@@ -104,14 +79,9 @@ namespace GildedRose.Tests
         public void TestAgedBrieQualityDoesNotExceedMax()
         {
             Item given = new Item { Name = "Aged Brie", Quality = 50, SellIn = 3 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(50, received.Quality);
         }
         
@@ -119,74 +89,49 @@ namespace GildedRose.Tests
         public void TestSulfurasSellInDoesNotDecrease()
         {
             Item given = new Item { Name = "Sulfuras, Hand of Ragnaros", Quality = 50, SellIn = 5 };
-            var app = new Program
-            {
-                Items = new List<Item> { given }
-            };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(5, received.SellIn);
         }
 
         [Fact]
         public void TestPassQualityIncreasesByOneWhenFarFromConcert()
         {
-            Item pass = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 15 };
-            var app = new Program
-            {
-                Items = new List<Item> { pass }
-            };
+            Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 15 };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(11, received.Quality);
         }
 
         [Fact]
         public void TestPassQualityIncreasesByTwoTenDaysAwayFromConcert()
         {
-            Item pass = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 10 };
-            var app = new Program
-            {
-                Items = new List<Item> { pass }
-            };
+            Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 10 };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(12, received.Quality);
         }
 
         [Fact]
         public void TestPassQualityIncreasesByThreeFiveDaysAwayFromConcert()
         {
-            Item pass = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 5 };
-            var app = new Program
-            {
-                Items = new List<Item> { pass }
-            };
+            Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 5 };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(13, received.Quality);
         }
 
         [Fact]
         public void TestPassQualityDropsAfterConcert()
         {
-            Item pass = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 0 };
-            var app = new Program
-            {
-                Items = new List<Item> { pass }
-            };
+            Item given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 0 };
+            Program.UpdateQuality(given);
 
-            app.UpdateQuality();
-
-            var received = app.Items[0];
+            var received = given;
             Assert.Equal(0, received.Quality);
         }
     }
