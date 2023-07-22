@@ -37,10 +37,10 @@ namespace GildedRose.Console
         public void UpdateQuality()
         {
             foreach (var item in Items)
-                Update(item);
+                UpdateQuality(item);
         }
 
-        private static void Update(Item item)
+        public static void UpdateQuality(Item item)
         {
             if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
             {
