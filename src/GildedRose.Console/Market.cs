@@ -5,7 +5,8 @@ namespace GildedRose.Domain
 {
     public static class Market
     {
-        private static readonly sbyte MAX_QUALITY = 50;
+        private const int MIN_QUALITY = 0;
+        private const int MAX_QUALITY = 50;
 
         private enum ItemType
         {
@@ -35,24 +36,19 @@ namespace GildedRose.Domain
                 case ItemType.ConcertPass:
                     UpdateConcertPassQuality(item);
                     return;
-                default:
-                    break;
+                case ItemType.Regular:
+                    UpdateRegularItemQuality(item);
+                    return;
             }
+        }
 
-            if (item.Quality > 0)
-            {
-                item.Quality--;
-            }
- 
+        private static void UpdateRegularItemQuality(Item item)
+        {
             item.SellIn--;
+            item.Quality--;
+            if (item.SellIn < 0) item.Quality--;
 
-            if (item.SellIn < 0)
-            {
-                if (item.Quality > 0)
-                {
-                    item.Quality--;
-                }
-            }
+            item.Quality = Math.Max(item.Quality, MIN_QUALITY);
         }
 
         private static void UpdateConcertPassQuality(Item item)
