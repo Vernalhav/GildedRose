@@ -121,6 +121,16 @@ namespace GildedRose.Tests
         }
 
         [Fact]
+        public void TestPassQualityDoesntExceedMax()
+        {
+            var given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 48, SellIn = 5 };
+            Market.UpdateQuality(given);
+
+            var received = given;
+            Assert.Equal(50, received.Quality);
+        }
+
+        [Fact]
         public void TestPassQualityDropsAfterConcert()
         {
             var given = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 10, SellIn = 0 };

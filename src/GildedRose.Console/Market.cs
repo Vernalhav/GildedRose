@@ -32,60 +32,39 @@ namespace GildedRose.Domain
                 case ItemType.AgedBrie:
                     UpdateAgedBrieQuality(item);
                     return;
+                case ItemType.ConcertPass:
+                    UpdateConcertPassQuality(item);
+                    return;
                 default:
                     break;
             }
 
-            if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Quality > 0)
+            {
+                item.Quality--;
+            }
+ 
+            item.SellIn--;
+
+            if (item.SellIn < 0)
             {
                 if (item.Quality > 0)
                 {
                     item.Quality--;
                 }
             }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality++;
+        }
 
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality++;
-                            }
-                        }
-
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality++;
-                            }
-                        }
-                    }
-                }
-            }
+        private static void UpdateConcertPassQuality(Item item)
+        {
+            if (item.SellIn <= 0) item.Quality = 0;
+            else if (item.SellIn <= 5) item.Quality += 3;
+            else if (item.SellIn <= 10) item.Quality += 2;
+            else item.Quality++;
+            
+            item.Quality = Math.Min(item.Quality, MAX_QUALITY);
 
             item.SellIn--;
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (item.Quality > 0)
-                    {
-                        item.Quality--;
-                    }
-                }
-                else
-                {
-                    item.Quality -= item.Quality;
-                }
-            }
         }
 
         private static void UpdateAgedBrieQuality(Item item)
@@ -98,8 +77,10 @@ namespace GildedRose.Domain
 
         private static ItemType GetItemType(string name)
         {
-            if (name.StartsWith("Sulfuras")) return ItemType.Legendary;
-            if (name.StartsWith("Aged Brie")) return ItemType.AgedBrie;
+            var cmp = StringComparison.OrdinalIgnoreCase;
+            if (name.StartsWith("Sulfuras", cmp)) return ItemType.Legendary;
+            if (name.StartsWith("Aged Brie", cmp)) return ItemType.AgedBrie;
+            if (name.ToLower().Contains("pass")) return ItemType.ConcertPass;
             return ItemType.Regular;
         }
     }
